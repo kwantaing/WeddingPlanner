@@ -1,10 +1,11 @@
 .reggy{
-    width: 50%;
+    margin-top:15%;
+    width: 100%;
     display:inline-block;
 }
 .loggy{
-    margin-top: 10%;
-    width: 50%;
+    margin-top: 45%;
+    width: 100%;
     display:inline-block;
 }
 .reggy input, .loggy input{
@@ -18,4 +19,24 @@
 }
 .guest_list{
     margin-left: 30px;
+}
+.login
+{   
+    margin-top:5%;
+    display:inline-block;
+    width:45%;
+    vertical-align:top;
+}
+.register
+{
+    margin-right:9%;
+    margin-top: 5%;
+    display: inline-block;
+    width:45%;
+}
+.addWedding
+{
+    width: 60%;
+    display: inline-block;
+    margin-left:19%;
 }

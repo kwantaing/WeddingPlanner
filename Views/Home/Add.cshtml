@@ -1,18 +1,22 @@
-<div class="main">
+<link rel="stylesheet" href="/css/style.css">
+<div class="addWedding text-center">
     <h5><a href="/logout">Log Out</a></h5>
+    <h2 class="display-5">Add a Wedding </h2>
+
+    @model Wedding
     <form method="post" asp-action="addWedding" controller="Home">
-        <label for="bride_name">Bride</label>
-        <span class="error"></span>
-        <input type="text" name="bride_name">
-        <label for="groom_name">Groom</label>
-        <span class="error"></span>
-        <input type="text" name="groom_name">
-        <label for="wedding_date">Wedding Date</label>
-        <span class="error"></span>
-        <input type="date" name="wedding_date">
-        <label for="wedding_address">Wedding Address</label>
-        <span class="error"></span>
-        <input type="text"name="wedding_address">
-        <button class="btn btn-primary"></button>
+        <label for="bride_name">Bride</label><br>
+        <span asp-validation-for="bride_name" class="error"></span>
+        <input class="form-control" type="text" name="bride_name">
+        <label for="groom_name">Groom</label><br>
+        <span asp-validation-for="groom_name" class="error"></span>
+        <input class="form-control" type="text" name="groom_name">
+        <label for="wedding_date">Wedding Date</label><br>
+        <span asp-validation-for="wedding_date" class="error"></span>
+        <input class="form-control" type="date" name="wedding_date">
+        <label for="wedding_address">Wedding Address</label><br>
+        <span asp-validation-for="wedding_address" class="error"></span>
+        <input class="form-control" type="text"name="wedding_address"><br>
+        <button class="btn btn-primary">Add Wedding</button>
     </form>
 </div>

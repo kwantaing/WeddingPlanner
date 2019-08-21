@@ -20,7 +20,7 @@ namespace WeddingPlanner.Controllers
         }
         public IActionResult Index()
         {
-            return RedirectToAction("Register");
+            return View("Index");
         }
 
         [HttpGet("register")]
@@ -36,7 +36,7 @@ namespace WeddingPlanner.Controllers
                 if(dbContext.Guests.Where(u => u.email==guest.email).ToList().Count>0){
                     //Guest with that email already exists
                     ModelState.AddModelError("email","Email is already in use!");
-                    return View("Register");
+                    return View("Index");
                 }
                 PasswordHasher<Guest> Hasher = new PasswordHasher<Guest>();
                 guest.password = Hasher.HashPassword(guest, guest.password);
@@ -54,7 +54,7 @@ namespace WeddingPlanner.Controllers
                 return RedirectToAction("Welcome");
 
             }else{
-                return View("Register");
+                return View("Index");
             }
         }
         [HttpGet("welcome")]
@@ -64,13 +64,14 @@ namespace WeddingPlanner.Controllers
             int ? current_guest_id = HttpContext.Session.GetInt32("guest_id");
             if(current_guest_id==null){
                 ModelState.AddModelError("email","Not logged in, please register or log in.");
-                return View("Register");
+                return View("Index");
             }else{
                 var CurrentGuest = dbContext.Guests.FirstOrDefault(u => u.guest_id == current_guest_id);
                 if(CurrentGuest == null){
                     ModelState.AddModelError("email","Not logged in, please register or log in.");
-                    return View("Register");
+                    return View("Index");
                 }else{
+                    removeExpired();
                     var allWeddings = dbContext.Weddings
                         .Include(w => w.Creator)
                         .Include(w => w.RSVPs)
@@ -152,22 +153,32 @@ namespace WeddingPlanner.Controllers
         [HttpPost("login")]
         public IActionResult Login(loginGuest guest){
             if(ModelState.IsValid){
-                if(dbContext.Guests.FirstOrDefault(u => u.email == guest.email) ==null){
-                    ModelState.AddModelError("email", "Invalid Email/Password");
-                    return View("Login");
+                if(dbContext.Guests.FirstOrDefault(u => u.email == guest.logEmail) ==null){
+                    ModelState.AddModelError("Email", "Invalid Email/Password");
+                    return View("Index");
                 }
-                var correctGuest = dbContext.Guests.First(u =>u.email == guest.email);
+                var correctGuest = dbContext.Guests.First(u =>u.email == guest.logEmail);
                 var hasher = new PasswordHasher<loginGuest>();
 
-                if(hasher.VerifyHashedPassword(guest,correctGuest.password,guest.password)!=0){
+                if(hasher.VerifyHashedPassword(guest,correctGuest.password,guest.logPassword)!=0){
                     HttpContext.Session.SetInt32("guest_id",correctGuest.guest_id);
                     return RedirectToAction("Welcome");
                 }else{
-                    ModelState.AddModelError("email","Invalid Email/Password");
-                    return View("Login");
+                    ModelState.AddModelError("logEmail","Invalid Email/Password");
+                    return View("Index");
                 }
             }
             return View("Login");   
+        }
+        public void removeExpired()
+        {
+            DateTime today = DateTime.Now;
+            var expiredWeddings = dbContext.Weddings.Where(w => w.wedding_date < today).ToList();
+            foreach(var expWedding in expiredWeddings)
+            {
+                dbContext.Weddings.Remove(expWedding);
+                dbContext.SaveChanges();
+            }
         }
 
         [HttpGet("logout")]
