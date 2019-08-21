@@ -1,0 +1,18 @@
+<div class="main">
+    <h5><a href="/logout">Log Out</a></h5>
+    <form method="post" asp-action="addWedding" controller="Home">
+        <label for="bride_name">Bride</label>
+        <span class="error"></span>
+        <input type="text" name="bride_name">
+        <label for="groom_name">Groom</label>
+        <span class="error"></span>
+        <input type="text" name="groom_name">
+        <label for="wedding_date">Wedding Date</label>
+        <span class="error"></span>
+        <input type="date" name="wedding_date">
+        <label for="wedding_address">Wedding Address</label>
+        <span class="error"></span>
+        <input type="text"name="wedding_address">
+        <button class="btn btn-primary"></button>
+    </form>
+</div>

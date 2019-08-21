@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="~/css/style.css">
+<div class="text-center">
+    <h1 class="display-4">Login to WeddingPlanner!</h1>
+    <h3 class="display-5"><a href="/register">Register</a></h3>
+    @model Guest
+    <form class="loggy" method="post" asp-action="Login" controller="Home">
+        <span class="error" asp-validation-for="email"></span>
+        <label for="email">Email</label>
+        <input type="email" name="email"class="form-control">
+        <span class="error" asp-validation-for="password"></span>
+        <label for="password">Password</label>
+        <input type="password" name="password" class="form-control">
+        <button class="btn btn-primary">Log in!</button>
+    </form>
+</div>

@@ -1,0 +1,21 @@
+.reggy{
+    width: 50%;
+    display:inline-block;
+}
+.loggy{
+    margin-top: 10%;
+    width: 50%;
+    display:inline-block;
+}
+.reggy input, .loggy input{
+    margin: 1% 0;
+}
+.reggy button, .reggy button{
+    margin: 15px 0;
+}
+.error{
+    color:red;
+}
+.guest_list{
+    margin-left: 30px;
+}

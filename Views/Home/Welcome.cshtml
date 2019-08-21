@@ -1,0 +1,40 @@
+@model List<Wedding>
+<div>
+    <h1>Welcome to the Wedding Planner!</h1>
+    <h3><a href="/logout">Log Out</a></h3>
+    <h2><a asp-action="weddingPage" controller="Home">Add a Wedding</a></h2>
+</div>
+<div class="main">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Wedding</th>
+                <th>Date</th>
+                <th>Guests</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var wedding in @Model){
+                <tr>
+                    <td><a href="/wedding/@wedding.wedding_id">@wedding.groom_name & @wedding.bride_name</a></td>
+                    <td>@wedding.wedding_date.ToString("MMMM dd,  yyyy")</td>
+                    <td>@wedding.RSVPs.Count</td>
+                    <td>
+                            @if(wedding.Creator.guest_id == ViewBag.guest_id)
+                            {
+                                <a href="/wedding/remove/@wedding.wedding_id" controller="Home" class="btn btn-primary">Delete</a> 
+
+                            }else if(wedding.RSVPs.FirstOrDefault(r => r.guest_id == ViewBag.guest_id)!=null)
+                            {
+                                <a href="/rsvp/remove/@wedding.wedding_id" controller="Home" class="btn btn-primary">un-RSVP</a> 
+                            }else
+                            {
+                                <a href="/rsvp/new/@wedding.wedding_id" controller="Home" class="btn btn-primary">RSVP</a>
+                            }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

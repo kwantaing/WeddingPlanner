@@ -1,0 +1,15 @@
+@model Wedding
+<link rel="stylesheet" href="~/css/style.css">
+<h3><a href="/logout">Log Out</a></h3>
+<div class="main">
+    <h1 class="display-4">@Model.groom_name & @Model.bride_name 's Wedding</h1>
+    <h3 class="display-5">Date: @Model.wedding_date.ToString("MMMM dd,  yyyy")</h3>
+    <h3 class="display-5">Guests:</h3>
+    <div class="guest_list">
+        @foreach(var rsvp in @Model.RSVPs)
+        {
+            <h5>@rsvp.Guest.first_name @rsvp.Guest.last_name</h5>
+        }
+    </div>
+    <h5 class="display-5">Organized by @Model.Creator.first_name @Model.Creator.last_name</h5>
+</div>
